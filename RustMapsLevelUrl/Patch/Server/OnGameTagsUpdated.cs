@@ -4,7 +4,7 @@ using Steamworks;
 namespace RustMapsLevelUrl.Patch.Server
 {
     [HarmonyPatch(typeof(SteamServer), nameof(SteamServer.GameTags), MethodType.Setter)]
-    public class OnGameTagsUpdated
+    public static class OnGameTagsUpdated
     {
         public static void Prefix(ref string value)
         {
@@ -12,7 +12,7 @@ namespace RustMapsLevelUrl.Patch.Server
             System.Console.WriteLine("RustMapsLevelUrl | OnGameTagsUpdated");
 #endif
 
-            if (value.EndsWith("rustmaps"))
+            if (value.Contains("rustmaps"))
             {
                 return;
             }
