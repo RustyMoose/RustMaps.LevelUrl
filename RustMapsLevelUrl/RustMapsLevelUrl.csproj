@@ -1,75 +1,39 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{FCA4E2C5-5F56-4A59-9D92-82B0AE04AB4E}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>RustMapsLevelUrl</RootNamespace>
         <AssemblyName>RustMapsLevelUrl</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
+        <ProjectGuid>{FCA4E2C5-5F56-4A59-9D92-82B0AE04AB4E}</ProjectGuid>
+        <TargetFramework>net48</TargetFramework>
+        <OutputType>Library</OutputType>
+        <Configurations>Windows</Configurations>
+        <LangVersion>10</LangVersion>
+        <Nullable>disable</Nullable>
+        <AssemblySearchPaths>..\RustAssemblies;$(AssemblySearchPaths)</AssemblySearchPaths>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
+    <PropertyGroup Condition="'$(Configuration)' == 'Windows'">
+        <OutputPath>bin\Windows\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>true</Optimize>
+        <DebugType>embedded</DebugType>
+        <PlatformTarget>AnyCPU</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
+		<AssemblySearchPaths>..\RustAssemblies;$(AssemblySearchPaths)</AssemblySearchPaths>
     </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="0Harmony">
-          <HintPath>..\RustAssemblies\0Harmony.dll</HintPath>
-        </Reference>
-        <Reference Include="Assembly-CSharp">
-          <HintPath>..\RustAssemblies\Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="Facepunch.SteamNetworking">
-          <HintPath>..\RustAssemblies\Facepunch.SteamNetworking.dll</HintPath>
-        </Reference>
-        <Reference Include="Facepunch.Steamworks.Win64">
-          <HintPath>..\RustAssemblies\Facepunch.Steamworks.Win64.dll</HintPath>
-        </Reference>
-        <Reference Include="Facepunch.UnityEngine">
-          <HintPath>..\RustAssemblies\Facepunch.UnityEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="UnityEngine">
-          <HintPath>..\RustAssemblies\UnityEngine.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.CoreModule">
-          <HintPath>..\RustAssemblies\UnityEngine.CoreModule.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Patch\Server\OnGameTagsUpdated.cs" />
-        <Compile Include="Patch\Server\OnServerInitialized.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
 
+    <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
+        <ItemGroup>
+            <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+        </ItemGroup>
+    </Target>
+    
+    <ItemGroup>
+        <Reference Include="0Harmony" />
+        <Reference Include="Assembly-CSharp" />
+        <Reference Include="Facepunch.SteamNetworking" />
+        <Reference Include="Facepunch.Steamworks.Win64" />
+        <Reference Include="Facepunch.UnityEngine" />
+        <Reference Include="UnityEngine" />
+        <Reference Include="UnityEngine.CoreModule" />
+    </ItemGroup>
 </Project>
