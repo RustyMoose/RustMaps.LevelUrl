@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <RootNamespace>RustMapsLevelUrl</RootNamespace>
-        <AssemblyName>RustMapsLevelUrl</AssemblyName>
+        
         <ProjectGuid>{FCA4E2C5-5F56-4A59-9D92-82B0AE04AB4E}</ProjectGuid>
         <TargetFramework>net48</TargetFramework>
         <OutputType>Library</OutputType>
-        <Configurations>Windows</Configurations>
+        <Configurations>Windows;Linux</Configurations>
         <LangVersion>10</LangVersion>
         <Nullable>disable</Nullable>
-        <AssemblySearchPaths>..\RustAssemblies;$(AssemblySearchPaths)</AssemblySearchPaths>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Windows'">
+        <AssemblyName>RustMapsLevelUrl.Win64</AssemblyName>
         <OutputPath>bin\Windows\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -18,7 +18,18 @@
         <DebugType>embedded</DebugType>
         <PlatformTarget>AnyCPU</PlatformTarget>
         <ErrorReport>prompt</ErrorReport>
-		<AssemblySearchPaths>..\RustAssemblies;$(AssemblySearchPaths)</AssemblySearchPaths>
+		<AssemblySearchPaths>..\RustAssemblies\Windows;$(AssemblySearchPaths)</AssemblySearchPaths>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Linux'">
+        <AssemblyName>RustMapsLevelUrl.Posix</AssemblyName>
+        <OutputPath>bin\Linux\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Optimize>true</Optimize>
+        <DebugType>embedded</DebugType>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <ErrorReport>prompt</ErrorReport>
+        <AssemblySearchPaths>..\RustAssemblies\Linux;$(AssemblySearchPaths)</AssemblySearchPaths>
     </PropertyGroup>
 
     <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
@@ -31,7 +42,8 @@
         <Reference Include="0Harmony" />
         <Reference Include="Assembly-CSharp" />
         <Reference Include="Facepunch.SteamNetworking" />
-        <Reference Include="Facepunch.Steamworks.Win64" />
+        <Reference Condition="'$(Configuration)' == 'Windows'" Include="Facepunch.Steamworks.Win64" />
+        <Reference Condition="'$(Configuration)' == 'Linux'" Include="Facepunch.Steamworks.Posix" />
         <Reference Include="Facepunch.UnityEngine" />
         <Reference Include="UnityEngine" />
         <Reference Include="UnityEngine.CoreModule" />
